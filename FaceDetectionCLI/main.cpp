@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
     if (argc == 1 || (argc == 2 && (QString(argv[1]) == "-h" || QString(argv[1]) == "--help"))) {
         QTextStream(stdout) << "Usage: '" << argv[0] << " IMAGE [IMAGE [...]]'"
-        << ", where IMAGE is a path to an image file in JPEG or BMP format.";
+        << ", where IMAGE is a path to an image file in JPEG or BMP format.\n";
         return 0;
     }
 

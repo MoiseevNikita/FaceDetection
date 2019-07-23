@@ -37,3 +37,13 @@ target_link_libraries(${PROJECT_NAME} Qt5::Widgets Qt5::Core Qt5::Gui)
 
 add_subdirectory(../FaceDetectionLib facedetectionlib)
 target_link_libraries(${PROJECT_NAME} FaceDetectionLib)
+
+if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    install(TARGETS ${PROJECT_NAME}
+        RUNTIME DESTINATION bin
+    )
+
+    set(CPACK_GENERATOR "DEB")
+    set(CPACK_PACKAGE_CONTACT "Nikita Moiseev moiseevn96@gmail.com")
+    include(CPack)
+endif()
