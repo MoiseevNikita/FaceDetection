@@ -4,8 +4,6 @@
 #include <QMainWindow>
 #include <vector>
 
-class ImageViewer;
-
 namespace Ui {
 class MainWindow;
 }
@@ -18,20 +16,20 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void onImageAnnotationFinished();
+
 private slots:
-    void on_actionOpen_triggered();
-    void on_actionDirectory_triggered();
+    void on_actionOpenFile_triggered();
+    void on_actionOpenDirectory_triggered();
     void on_tabWidget_tabCloseRequested(int index);
 
 private:
     void processOneImage(QString filename);
-    void onOneImageProcessingFinished();
     void updateProgressBar();
 
     Ui::MainWindow *ui;
-    int images_to_process, images_processed;
-
-    friend class ImageViewer;
+    unsigned imagesToProcess, imagesProcessed;
 };
 
 #endif // MAINWINDOW_H

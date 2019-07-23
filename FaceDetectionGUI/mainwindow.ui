@@ -86,8 +86,8 @@
     <property name="title">
      <string>Open</string>
     </property>
-    <addaction name="actionOpen"/>
-    <addaction name="actionDirectory"/>
+    <addaction name="actionOpenFile"/>
+    <addaction name="actionOpenDirectory"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -100,12 +100,12 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <action name="actionOpen">
+  <action name="actionOpenFile">
    <property name="text">
     <string>File(s)</string>
    </property>
   </action>
-  <action name="actionDirectory">
+  <action name="actionOpenDirectory">
    <property name="text">
     <string>Directory</string>
    </property>

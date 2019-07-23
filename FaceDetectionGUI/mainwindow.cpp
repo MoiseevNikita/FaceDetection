@@ -13,7 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->tabWidget->clear();
 
-    images_to_process = images_processed = 0;
+    setWindowTitle("Face Detection Application");
+
+    imagesToProcess = imagesProcessed = 0;
     updateProgressBar();
 }
 
@@ -28,56 +30,58 @@ void MainWindow::processOneImage(QString filename)
     bool valid = image.load(filename);
     if (valid)
     {
-        ++images_to_process;
+        ++imagesToProcess;
         updateProgressBar();
 
         ImageViewer* viewer = new ImageViewer(this, filename);
+        connect(viewer, &ImageViewer::imageAnnotated, this, &MainWindow::onImageAnnotationFinished);
         ui->tabWidget->addTab(
             viewer,
             QFileInfo(filename).fileName()
         );
-        ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
     }
 }
 
-void MainWindow::onOneImageProcessingFinished()
+void MainWindow::onImageAnnotationFinished()
 {
-    ++images_processed;
+    ++imagesProcessed;
     updateProgressBar();
 }
 
 void MainWindow::updateProgressBar()
 {
-    if (images_processed != images_to_process) {
-        ui->progressBar->setRange(0, images_to_process);
-        ui->progressBar->setValue(images_processed);
-        ui->progressBar->setFormat(QString("%v/%0").arg(images_to_process));
+    if (imagesProcessed != imagesToProcess) {
+        ui->progressBar->setRange(0, imagesToProcess);
+        ui->progressBar->setValue(imagesProcessed);
+        ui->progressBar->setFormat(QString("%v/%0").arg(imagesToProcess));
         ui->progressBar->show();
     } else {
         ui->progressBar->hide();
-        images_to_process =images_processed = 0;
+        imagesToProcess =imagesProcessed = 0;
     }
 }
 
-void MainWindow::on_actionOpen_triggered()
+void MainWindow::on_actionOpenFile_triggered()
 {
-    QStringList filelist = QFileDialog::getOpenFileNames(this, "Choose a jpeg image", "", "Images (*.jpg *.jpeg)");
+    QStringList filelist = QFileDialog::getOpenFileNames(this, "Choose image(s)", "", "Images (*.bmp *.jpg *.jpeg)");
     foreach (QString filename, filelist) {
         processOneImage(filename);
     }
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
 }
 
-void MainWindow::on_actionDirectory_triggered()
+void MainWindow::on_actionOpenDirectory_triggered()
 {
-    QString dirname = QFileDialog::getExistingDirectory(this, "Choose folder with jpeg images");
+    QString dirname = QFileDialog::getExistingDirectory(this, "Choose folder with images");
     if (QString::compare(dirname, QString()) != 0)
     {
         QDir dir(dirname);
-        QFileInfoList filelist = dir.entryInfoList(QStringList{"*.jpg", "*.jpeg"});
+        QFileInfoList filelist = dir.entryInfoList(QStringList{"*.bmp", "*.jpg", "*.jpeg"});
         foreach (QFileInfo fileinfo, filelist) {
             processOneImage(fileinfo.absoluteFilePath());
         }
     }
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
 }
 
 void MainWindow::on_tabWidget_tabCloseRequested(int index)
