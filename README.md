@@ -62,3 +62,21 @@ cmake ..
 cmake --build .
 ./FaceDetectionGUI
 ```
+
+## Docker
+
+You can build both applications on Linux using Docker with the following commands:
+
+```bash
+docker build --tag=facedetectionappsbuilder .
+docker run -v `pwd`:/mnt facedetectionappsbuilder:latest
+```
+
+`FaceDetectionCLI-0.1.1-Linux.deb` and `FaceDetectionGUI-0.1.1-Linux.deb` should appear in repository's root directory.
+
+You can install these packages onto your machine by executing
+
+```bash
+apt install ./FaceDetectionCLI-0.1.1-Linux.deb
+apt install ./FaceDetectionGUI-0.1.1-Linux.deb
+```
