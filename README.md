@@ -80,3 +80,4 @@ You can install these packages onto your machine by executing
 apt install ./FaceDetectionCLI-0.1.1-Linux.deb
 apt install ./FaceDetectionGUI-0.1.1-Linux.deb
 ```
+**KNOWN ISSUE:** only one of the above packages can be installed at any time due to their dependency on libFaceDetectionLib.so. If you want to delete currently installed package, use `apt remove facedetectioncli` or `apt remove facedetectiongui`
